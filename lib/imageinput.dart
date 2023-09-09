@@ -2,6 +2,7 @@ import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:image_picker/image_picker.dart";
 import "dart:io";
+import 'package:info_popup/info_popup.dart';
 
 class ImageInput extends StatefulWidget {
   const ImageInput({super.key, required this.onimageadd});

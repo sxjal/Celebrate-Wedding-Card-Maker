@@ -1,8 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:celebrate/imageinput.dart';
 
 class HomeScreen extends StatelessWidget {
   // This widget is the root of your application.
@@ -112,12 +111,15 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           const SizedBox(height: 10.0),
-          ElevatedButton(
-            child: const Text("Pick Image"),
-            onPressed: () {
-              _showPickOptionsDialog(context);
-            },
-          )
+          ImageInput(onimageadd: (addedimage) {
+            _pickedImage = addedimage;
+          }),
+          // ElevatedButton(
+          //   child: const Text("Pick Image"),
+          //   onPressed: () {
+          //     _showPickOptionsDialog(context);
+          //   },
+          // )
         ],
       ),
     );
