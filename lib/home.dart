@@ -53,18 +53,66 @@ class _HomeScreenState extends State<HomeScreen> {
   void dialog(CroppedFile croppedFile) {
     showDialog(
       context: context,
-      builder: (builder) => XenPopupCard(
-        appBar: appBar,
-        gutter: gutter,
-        body: ListView(
-          children: [
-            const Text("body"),
-            Image(
-              image: FileImage(
-                File(croppedFile.path),
-              ),
-            )
-          ],
+      builder: (builder) => Center(
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          width: MediaQuery.of(context).size.width * .8,
+          height: MediaQuery.of(context).size.height * .5,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              color: const Color.fromARGB(255, 197, 197, 197),
+            ),
+          ),
+          child: Material(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 10,
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.close),
+                  ),
+                ),
+                const Text(
+                  "Uploaded Image",
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Expanded(
+                  child: Image(
+                    image: FileImage(File(croppedFile.path)),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateColor.resolveWith(
+                        (states) => const Color.fromARGB(255, 42, 120, 114)),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    "Use this image",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -163,7 +211,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           pickedimage != null
               ? Image(
-                  image: FileImage(pickedimage!),
+                  image: FileImage(
+                    File(pickedimage.path),
+                  ),
                 )
               : const Text(""),
         ],
