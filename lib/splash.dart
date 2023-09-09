@@ -36,8 +36,13 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Column(
               children: [
+                Image(
+                  image: AssetImage("asset/logo.jpg"),
+                  width: 150.0,
+                  height: 150.0,
+                ),
                 Text(
-                  "Celebrate", 
+                  "Celebrate",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
