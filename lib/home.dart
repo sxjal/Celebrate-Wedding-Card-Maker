@@ -191,7 +191,8 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Color.fromARGB(255, 197, 197, 197)),
+              border:
+                  Border.all(color: const Color.fromARGB(255, 197, 197, 197)),
             ),
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.all(10),
@@ -220,13 +221,32 @@ class _HomeScreenState extends State<HomeScreen> {
                     //     appBar: appBar, gutter: gutter, body: Text("Sajal")),
                     builder: (context) => Center(
                       child: Container(
+                        padding: const EdgeInsets.all(10),
                         width: MediaQuery.of(context).size.width * .8,
-                        height: 300,
+                        height: MediaQuery.of(context).size.height * .5,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border.all(
-                            color: Color.fromARGB(255, 197, 197, 197),
+                            color: const Color.fromARGB(255, 197, 197, 197),
                           ),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Material(
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: IconButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  icon: const Icon(Icons.close),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
