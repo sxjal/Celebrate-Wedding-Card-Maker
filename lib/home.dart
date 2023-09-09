@@ -1,10 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:celebrate/imageinput.dart';
-import 'package:flutter/material.dart';
 import 'package:xen_popup_card/xen_card.dart';
-
+import "package:image_picker/image_picker.dart";
+import "package:image_cropper/image_cropper.dart";
 // class HomeScreen extends StatelessWidget {
 //   // This widget is the root of your application.
 //   const HomeScreen({super.key});
@@ -71,63 +70,6 @@ import 'package:xen_popup_card/xen_card.dart';
 //   //   });
 //   // }
 
-//   // void _showPickOptionsDialog(BuildContext context) {
-//   //   showDialog(
-//   //     context: context,
-//   //     builder: (context) => AlertDialog(
-//   //       content: Column(
-//   //         mainAxisSize: MainAxisSize.min,
-//   //         children: <Widget>[
-//   //           ListTile(
-//   //             title: const Text("Pick from Gallery"),
-//   //             onTap: () {
-//   //               _loadPicker(ImageSource.gallery);
-//   //             },
-//   //           ),
-//   //           ListTile(
-//   //             title: const Text("Take a pictuer"),
-//   //             onTap: () {
-//   //               _loadPicker(ImageSource.camera);
-//   //             },
-//   //           )
-//   //         ],
-//   //       ),
-//   //     ),
-//   //   );
-//   // }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Profile'),
-//       ),
-//       body: ListView(
-//         children: <Widget>[
-//           Center(
-//             child: CircleAvatar(
-//               radius: 80,
-//               backgroundImage:
-//                   _pickedImage != null ? FileImage(_pickedImage!) : null,
-//               child: _pickedImage == null ? const Text("Picture") : null,
-//             ),
-//           ),
-//           const SizedBox(height: 10.0),
-//           ImageInput(onimageadd: (addedimage) {
-//             _pickedImage = addedimage;
-//           }),
-//           // ElevatedButton(
-//           //   child: const Text("Pick Image"),
-//           //   onPressed: () {
-//           //     _showPickOptionsDialog(context);
-//           //   },
-//           // )
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -136,8 +78,44 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  File? pickedimage;
-  @override
+  File? _selectedimage;
+  final imagepicker = ImagePicker();
+  var pickedimage;
+
+  void _pickgallery() async {
+    pickedimage = await imagepicker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 600,
+    );
+    _onpickimage(pickedimage);
+  }
+
+  void _onpickimage(var pickedimage) async {
+    print("In _onpickimage");
+    if (pickedimage == null) {
+      print("inside if");
+      return;
+    } else {
+      print("inside else");
+      _selectedimage = File(pickedimage.path);
+
+      final croppedFile = await ImageCropper().cropImage(
+        sourcePath: pickedimage.path,
+        aspectRatio: CropAspectRatio(
+            ratioX: 1.0, ratioY: 1.0), // Adjust aspect ratio as needed
+        compressQuality: 100, // Adjust image quality
+        maxWidth: 500, // Adjust maximum width
+        maxHeight: 500, // Adjust maximum height
+        // androidUiSettings: AndroidUiSettings(
+        //   toolbarTitle: 'Crop Image',
+        //   toolbarColor: Colors.blue,
+        //   toolbarWidgetColor: Colors.white,
+        // ),
+      );
+      //image in here
+    }
+  }
+
   XenCardAppBar appBar = const XenCardAppBar(
     // To remove shadow from appbar
     shadow: BoxShadow(color: Colors.transparent),
@@ -215,42 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     backgroundColor: MaterialStateColor.resolveWith(
                         (states) => const Color.fromARGB(255, 42, 120, 114)),
                   ),
-                  onPressed: () => showDialog(
-                    context: context,
-                    // builder: (builder) => XenPopupCard(
-                    //     appBar: appBar, gutter: gutter, body: Tebxt("Sajal")),
-                    builder: (context) => Center(
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        width: MediaQuery.of(context).size.width * .8,
-                        height: MediaQuery.of(context).size.height * .5,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            color: const Color.fromARGB(255, 197, 197, 197),
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          //   mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Material(
-                              child: Align(
-                                alignment: Alignment.topRight,
-                                child: IconButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  icon: const Icon(Icons.close),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  onPressed: _pickgallery,
                   child: const Text(
                     "Choose from Device",
                     style: TextStyle(
@@ -258,6 +201,54 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+                // ElevatedButton(
+                //   style: ButtonStyle(
+                //     backgroundColor: MaterialStateColor.resolveWith(
+                //         (states) => const Color.fromARGB(255, 42, 120, 114)),
+                //   ),
+                //   onPressed: () => showDialog(
+                //     context: context,
+                //     // builder: (builder) => XenPopupCard(
+                //     //     appBar: appBar, gutter: gutter, body: Tebxt("Sajal")),
+                //     builder: (context) => Center(
+                //       child: Container(
+                //         padding: const EdgeInsets.all(10),
+                //         width: MediaQuery.of(context).size.width * .8,
+                //         height: MediaQuery.of(context).size.height * .5,
+                //         decoration: BoxDecoration(
+                //           color: Colors.white,
+                //           border: Border.all(
+                //             color: const Color.fromARGB(255, 197, 197, 197),
+                //           ),
+                //         ),
+                //         child: Column(
+                //           mainAxisSize: MainAxisSize.min,
+                //           //   mainAxisAlignment: MainAxisAlignment.center,
+                //           crossAxisAlignment: CrossAxisAlignment.center,
+                //           children: [
+                //             Material(
+                //               child: Align(
+                //                 alignment: Alignment.topRight,
+                //                 child: IconButton(
+                //                   onPressed: () {
+                //                     Navigator.pop(context);
+                //                   },
+                //                   icon: const Icon(Icons.close),
+                //                 ),
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                //   child: const Text(
+                //     "Choose from Device",
+                //     style: TextStyle(
+                //       color: Colors.white,
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(
                   height: 10,
                 ),
