@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -8,14 +11,17 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {},
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            SystemNavigator.pop();
+            exit(0);
+          },
         ),
         backgroundColor: Colors.blueGrey,
         centerTitle: true,
-        title: Text("Home Screen"),
+        title: Text("Add Image/Icon"),
       ),
-      body: Text("Home Screen"),
+      //body: Text("Home Screen"),
     );
   }
 }
