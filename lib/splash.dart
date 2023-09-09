@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Column(
               children: [
                 Text(
-                  "Celebrate",
+                  "Celebrate", 
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
