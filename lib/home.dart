@@ -45,6 +45,56 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   File? _pickedImage;
 
+  // _loadPicker(ImageSource source) async {
+  //   XFile photo = ImagePicker().pickImage(source: source) as XFile;
+  //   File picked = File(photo.path);
+
+  //   _cropImage(picked);
+  //   Navigator.pop(context);
+  // }
+
+  // _cropImage(File picked) async {
+  //   CroppedFile? some = await ImageCropper().cropImage(
+  //     sourcePath: picked.path,
+  //     aspectRatioPresets: [
+  //       CropAspectRatioPreset.original,
+  //       CropAspectRatioPreset.ratio16x9,
+  //       CropAspectRatioPreset.ratio4x3,
+  //     ],
+  //     maxWidth: 800,
+  //   );
+  //   File cropped = File(some!.path);
+
+  //   setState(() {
+  //     _pickedImage = cropped;
+  //   });
+  // }
+
+  // void _showPickOptionsDialog(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       content: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: <Widget>[
+  //           ListTile(
+  //             title: const Text("Pick from Gallery"),
+  //             onTap: () {
+  //               _loadPicker(ImageSource.gallery);
+  //             },
+  //           ),
+  //           ListTile(
+  //             title: const Text("Take a pictuer"),
+  //             onTap: () {
+  //               _loadPicker(ImageSource.camera);
+  //             },
+  //           )
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,56 +119,6 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           )
         ],
-      ),
-    );
-  }
-
-  _loadPicker(ImageSource source) async {
-    XFile photo = ImagePicker().pickImage(source: source) as XFile;
-    File picked = File(photo.path);
-
-    _cropImage(picked);
-      Navigator.pop(context);
-  }
-
-  _cropImage(File picked) async {
-    CroppedFile? some = await ImageCropper().cropImage(
-      sourcePath: picked.path,
-      aspectRatioPresets: [
-        CropAspectRatioPreset.original,
-        CropAspectRatioPreset.ratio16x9,
-        CropAspectRatioPreset.ratio4x3,
-      ],
-      maxWidth: 800,
-    );
-    File cropped = File(some!.path);
-
-    setState(() {
-      _pickedImage = cropped;
-    });
-    }
-
-  void _showPickOptionsDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ListTile(
-              title: const Text("Pick from Gallery"),
-              onTap: () {
-                _loadPicker(ImageSource.gallery);
-              },
-            ),
-            ListTile(
-              title: const Text("Take a pictuer"),
-              onTap: () {
-                _loadPicker(ImageSource.camera);
-              },
-            )
-          ],
-        ),
       ),
     );
   }
