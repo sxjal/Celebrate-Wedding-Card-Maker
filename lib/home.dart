@@ -136,21 +136,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  File? pickedimage;
   @override
   XenCardAppBar appBar = const XenCardAppBar(
+    // To remove shadow from appbar
+    shadow: BoxShadow(color: Colors.transparent),
     child: Text(
       "app bar",
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
     ),
-    // To remove shadow from appbar
-    shadow: BoxShadow(color: Colors.transparent),
   );
 
   XenCardGutter gutter = XenCardGutter(
     child: Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: TextButton(
-        child: Text("close"),
+        child: const Text("close"),
         onPressed: () {},
       ),
     ),
@@ -193,44 +194,56 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         title: const Text("Add Image/Icon"),
       ),
-      body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.black),
-        ),
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.all(10),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 10,
+      body: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Color.fromARGB(255, 197, 197, 197)),
             ),
-            const Text(
-              "Upload Image",
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateColor.resolveWith(
-                    (states) => const Color.fromARGB(255, 42, 120, 114)),
-              ),
-              onPressed: () {},
-              child: const Text(
-                "Choose from Device",
-                style: TextStyle(
-                  color: Colors.white,
+            padding: const EdgeInsets.all(10),
+            margin: const EdgeInsets.all(10),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
+                const Text(
+                  "Upload Image",
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateColor.resolveWith(
+                        (states) => const Color.fromARGB(255, 42, 120, 114)),
+                  ),
+                  onPressed: () {},
+                  child: const Text(
+                    "Choose from Device",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          pickedimage != null
+              ? Image(
+                  image: FileImage(pickedimage!),
+                )
+              : const Text(""),
+        ],
       ),
     );
   }
