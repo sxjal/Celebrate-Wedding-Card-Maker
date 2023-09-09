@@ -218,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () => showDialog(
                     context: context,
                     // builder: (builder) => XenPopupCard(
-                    //     appBar: appBar, gutter: gutter, body: Text("Sajal")),
+                    //     appBar: appBar, gutter: gutter, body: Tebxt("Sajal")),
                     builder: (context) => Center(
                       child: Container(
                         padding: const EdgeInsets.all(10),
