@@ -158,21 +158,11 @@ class _HomeScreenState extends State<HomeScreen> {
   );
 
   Widget cardWithGutterAndAppBar() => TextButton(
-        onPressed: () => showDialog(
-          context: context,
-          builder: (builder) => XenPopupCard(
-            appBar: appBar,
-            gutter: gutter,
-            body: ListView(
-              children: const [
-                Text("body"),
-              ],
-            ),
-          ),
-        ),
+        onPressed: () => () {},
         child: const Text("open card with gutter and app bar"),
       );
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -224,7 +214,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     backgroundColor: MaterialStateColor.resolveWith(
                         (states) => const Color.fromARGB(255, 42, 120, 114)),
                   ),
-                  onPressed: () {},
+                  onPressed: () => showDialog(
+                    context: context,
+                    // builder: (builder) => XenPopupCard(
+                    //     appBar: appBar, gutter: gutter, body: Text("Sajal")),
+                    builder: (context) => Center(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * .8,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            color: Color.fromARGB(255, 197, 197, 197),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   child: const Text(
                     "Choose from Device",
                     style: TextStyle(
