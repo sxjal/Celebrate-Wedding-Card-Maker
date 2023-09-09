@@ -4,6 +4,8 @@ import 'dart:async';
 import 'package:celebrate/home.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+  
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
