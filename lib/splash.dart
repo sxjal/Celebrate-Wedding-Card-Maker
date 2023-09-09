@@ -34,26 +34,14 @@ class _SplashScreenState extends State<SplashScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Column(
-              children: [
-                Image(
-                  image: AssetImage("asset/logo.jpg"),
-                  width: 150.0,
-                  height: 150.0,
-                ),
-                Text(
-                  "Celebrate",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0,
-                  ),
-                ),
-              ],
+            Image(
+              image: AssetImage("asset/logo.jpg"),
+              width: 300.0,
+              height: 300.0,
             ),
             CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+              valueColor: AlwaysStoppedAnimation<Color>(
+                  Color.fromARGB(255, 168, 166, 164)),
             ),
           ],
         ),
