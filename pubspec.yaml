@@ -39,6 +39,7 @@ dependencies:
   image_cropper: ^5.0.0
   info_popup: ^3.0.6
   xen_popup_card: ^0.0.1
+  widget_mask: ^1.0.0+0
 
 dev_dependencies:
   flutter_test:

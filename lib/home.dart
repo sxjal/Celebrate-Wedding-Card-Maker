@@ -2,10 +2,10 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:xen_popup_card/xen_card.dart';
+import 'package:flutter/services.dart'; 
 import "package:image_picker/image_picker.dart";
 import "package:image_cropper/image_cropper.dart";
+import 'package:widget_mask/widget_mask.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -75,10 +75,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 Align(
                   alignment: Alignment.topRight,
                   child: IconButton(
+                    iconSize: MediaQuery.of(context).size.width * .08,
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: const Icon(Icons.close),
+                    icon: const Icon(Icons.cancel),
                   ),
                 ),
                 const Text(
@@ -89,7 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Expanded(
                   child: Image(
-                    image: FileImage(File(croppedFile.path)),
+                    image: FileImage(
+                      File(croppedFile.path),
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -116,31 +119,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+    setState(() {
+      pickedimage = croppedFile;
+    });
   }
-
-  XenCardAppBar appBar = const XenCardAppBar(
-    // To remove shadow from appbar
-    shadow: BoxShadow(color: Colors.transparent),
-    child: Text(
-      "app bar",
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
-    ),
-  );
-
-  XenCardGutter gutter = XenCardGutter(
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextButton(
-        child: const Text("close"),
-        onPressed: () {},
-      ),
-    ),
-  );
-
-  Widget cardWithGutterAndAppBar() => TextButton(
-        onPressed: () => () {},
-        child: const Text("open card with gutter and app bar"),
-      );
 
   @override
   Widget build(BuildContext context) {
@@ -210,10 +192,50 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           pickedimage != null
-              ? Image(
-                  image: FileImage(
-                    File(pickedimage.path),
-                  ),
+              ? Stack(
+                  children: [
+                    Container(
+                      width: 500,
+                      height: 500,
+                      padding: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("asset/user_image_frame_1.png"),
+                          // colorFilter: ColorFilter.mode(
+                          //   Color.fromARGB(255, 236, 236, 236),
+                          //   BlendMode.lighten,
+                          // ),
+                        ),
+                      ),
+                      child: Image(
+                        image: FileImage(
+                          File(pickedimage.path),
+                        ),
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        colorBlendMode: BlendMode.lighten,
+                        filterQuality: FilterQuality.high,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    // Container(
+                    //   width: 500,
+                    //   height: 500,
+                    //   padding: const EdgeInsets.all(10),
+                    //   margin: const EdgeInsets.all(10),
+                    //   decoration: BoxDecoration(
+                    //     image: DecorationImage(
+                    //       image: FileImage(
+                    //         File(pickedimage.path),
+                    //       ),
+                    //       colorFilter: const ColorFilter.mode(
+                    //         Color.fromARGB(255, 0, 0, 0),
+                    //         BlendMode.lighten,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
                 )
               : const Text(""),
         ],
