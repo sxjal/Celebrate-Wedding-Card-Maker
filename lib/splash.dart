@@ -5,7 +5,7 @@ import 'package:celebrate/home.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
-  
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -15,9 +15,12 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-        const Duration(seconds: 3),
-        () => Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const HomeScreen())));
+      const Duration(seconds: 3),
+      () => Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      ),
+    );
   }
 
   @override
@@ -26,28 +29,15 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [
-                Color(0xFFFF800B),
-                Color(0xFFCE1010),
-              ]),
-        ),
+        decoration: const BoxDecoration(color: Colors.white),
         child: const Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Column(
               children: [
-                // Image.asset(
-                //   "assets/images/pizza.png",
-                //   height: 300.0,
-                //   width: 300.0,
-                // ),
                 Text(
-                  "Home Delivery Partner",
+                  "Celebrate",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
