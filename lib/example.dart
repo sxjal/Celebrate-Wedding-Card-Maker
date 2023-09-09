@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xen_popup_card/xen_card.dart';
 
- 
-
 class ExampleApp extends StatefulWidget {
   const ExampleApp({Key? key}) : super(key: key);
 
@@ -69,7 +67,7 @@ class _ExampleAppState extends State<ExampleApp> {
 
   // card with body only
   // no appbar and gutter
-  Widget cardWithBodyOnly() => TextButton(
+  cardWithBodyOnly() => TextButton(
         onPressed: () => showDialog(
           context: context,
           builder: (builder) => XenPopupCard(

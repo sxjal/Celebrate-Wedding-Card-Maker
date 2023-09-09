@@ -6,8 +6,8 @@ void main() {
   runApp(
     const MaterialApp(
       title: 'Flutter Tutorial',
-      // home: SplashScreen(),
-      home: ExampleApp(),
+      home: SplashScreen(),
+      // home: ExampleApp(),
     ),
   );
 }
