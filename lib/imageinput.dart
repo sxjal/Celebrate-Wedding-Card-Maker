@@ -1,3 +1,4 @@
+import "package:celebrate/InfoPopupPage.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:image_picker/image_picker.dart";
@@ -67,10 +68,48 @@ class _ImageInputState extends State<ImageInput> {
     );
   }
 
+  void popup() {
+    InfoPopupWidget(
+      contentTitle: 'Info Popup Details',
+      arrowTheme: InfoPopupArrowTheme(
+        color: Colors.pink,
+        arrowDirection: ArrowDirection.up,
+      ),
+      contentTheme: InfoPopupContentTheme(
+        infoContainerBackgroundColor: Colors.black,
+        infoTextStyle: TextStyle(color: Colors.white),
+        contentPadding: const EdgeInsets.all(8),
+        contentBorderRadius: BorderRadius.all(Radius.circular(10)),
+        infoTextAlign: TextAlign.center,
+      ),
+      dismissTriggerBehavior: PopupDismissTriggerBehavior.onTapArea,
+      areaBackgroundColor: Colors.transparent,
+      indicatorOffset: Offset.zero,
+      contentOffset: Offset.zero,
+      onControllerCreated: (controller) {
+        print('Info Popup Controller Created');
+      },
+      onAreaPressed: (InfoPopupController controller) {
+        print('Area Pressed');
+      },
+      infoPopupDismissed: () {
+        print('Info Popup Dismissed');
+      },
+      onLayoutMounted: (Size size) {
+        print('Info Popup Layout Mounted');
+      },
+      child: Icon(
+        Icons.info,
+        color: Colors.pink,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget contentcontainer = TextButton.icon(
-      onPressed: _takepicture,
+      //   onPressed: _takepicture,
+      onPressed: () {}, 
       icon: const Icon(
         Icons.image,
       ),
