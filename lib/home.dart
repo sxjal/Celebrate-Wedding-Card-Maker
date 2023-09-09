@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 
 class HomeScreen extends StatelessWidget {
   // This widget is the root of your application.
+  const HomeScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,40 +29,41 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
         title: const Text("Add Image/Icon"),
       ),
-      body: ProfilePage(),
+      body: const ProfilePage(),
     );
   }
 }
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({Key key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  File _pickedImage;
+  File? _pickedImage;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
       ),
       body: ListView(
         children: <Widget>[
           Center(
             child: CircleAvatar(
               radius: 80,
-              child: _pickedImage == null ? Text("Picture") : null,
               backgroundImage:
-                  _pickedImage != null ? FileImage(_pickedImage) : null,
+                  _pickedImage != null ? FileImage(_pickedImage!) : null,
+              child: _pickedImage == null ? const Text("Picture") : null,
             ),
           ),
           const SizedBox(height: 10.0),
-          RaisedButton(
-            child: Text("Pick Image"),
+          ElevatedButton(
+            child: const Text("Pick Image"),
             onPressed: () {
               _showPickOptionsDialog(context);
             },
@@ -72,21 +74,15 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   _loadPicker(ImageSource source) async {
-    File picked = await ImagePicker.pickImage(source: source);
-    if (picked != null) {
-      _cropImage(picked);
-    }
-    Navigator.pop(context);
+    XFile photo = ImagePicker().pickImage(source: source) as XFile;
+    File picked = File(photo.path);
+
+    _cropImage(picked);
+      Navigator.pop(context);
   }
 
   _cropImage(File picked) async {
-    File cropped = await ImageCropper.cropImage(
-      androidUiSettings: AndroidUiSettings(
-        statusBarColor: Colors.red,
-        toolbarColor: Colors.red,
-        toolbarTitle: "Crop Image",
-        toolbarWidgetColor: Colors.white,
-      ),
+    CroppedFile? some = await ImageCropper().cropImage(
       sourcePath: picked.path,
       aspectRatioPresets: [
         CropAspectRatioPreset.original,
@@ -95,12 +91,12 @@ class _ProfilePageState extends State<ProfilePage> {
       ],
       maxWidth: 800,
     );
-    if (cropped != null) {
-      setState(() {
-        _pickedImage = cropped;
-      });
+    File cropped = File(some!.path);
+
+    setState(() {
+      _pickedImage = cropped;
+    });
     }
-  }
 
   void _showPickOptionsDialog(BuildContext context) {
     showDialog(
@@ -110,13 +106,13 @@ class _ProfilePageState extends State<ProfilePage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
-              title: Text("Pick from Gallery"),
+              title: const Text("Pick from Gallery"),
               onTap: () {
                 _loadPicker(ImageSource.gallery);
               },
             ),
             ListTile(
-              title: Text("Take a pictuer"),
+              title: const Text("Take a pictuer"),
               onTap: () {
                 _loadPicker(ImageSource.camera);
               },
