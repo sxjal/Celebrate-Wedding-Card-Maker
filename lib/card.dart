@@ -96,34 +96,12 @@ class _MaskWidgetState extends State<MaskWidget> {
       AssetImage("asset/user_image_frame_1.png"),
       AssetImage("asset/user_image_frame_2.png"),
       AssetImage("asset/user_image_frame_3.png"),
-      AssetImage("asset/user_image_frame_4.png")
+      AssetImage("asset/user_image_frame_4.png"),
     ];
+
     return Container(
       child: widget.pickedimage != null
-          ? Stack(
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * .9,
-                  height: MediaQuery.of(context).size.height * .5,
-                  padding: const EdgeInsets.all(10),
-                  margin: const EdgeInsets.all(10),
-                  child: WidgetMask(
-                    blendMode: BlendMode.srcATop,
-                    childSaveLayer: true,
-                    mask: Image(
-                      image: FileImage(
-                        File(widget.pickedimage!.path),
-                      ),
-                      fit: BoxFit.fill,
-                    ),
-                    child: const Image(
-                      image: AssetImage("asset/user_image_frame_1.png"),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-              ],
-            )
+          ? 
           : const Text(""),
     );
   }
