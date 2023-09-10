@@ -1,5 +1,4 @@
 // ignore_for_file: unused_field, prefer_typing_uninitialized_variables
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -195,11 +194,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: MediaQuery.of(context).size.height * .5,
                       padding: const EdgeInsets.all(10),
                       margin: const EdgeInsets.all(10),
-                      child: Image(
-                        image: FileImage(
-                          File(pickedimage.path),
+                      child: WidgetMask(
+                        blendMode: BlendMode.srcATop,
+                        childSaveLayer: true,
+                        mask: Image(
+                          image: FileImage(
+                            File(pickedimage.path),
+                          ),
+                          fit: BoxFit.fill,
                         ),
-                        fit: BoxFit.fill,
+                        child: const Image(
+                          image: AssetImage(
+                            "asset/user_image_frame_1.png",
+                          ),
+                        ),
                       ),
                     ),
                   ],
