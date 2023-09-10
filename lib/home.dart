@@ -53,6 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void dialog() {
+    var buttonheight = MediaQuery.of(context).size.width * .1;
+    var buttonwidth = MediaQuery.of(context).size.width * .1;
     showDialog(
       context: context,
       builder: (builder) {
@@ -60,7 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
         return AlertDialog(
           content: StatefulBuilder(
               builder: (BuildContext context, StateSetter setpresentstate) {
-            print("buidlider called");
             return Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -86,19 +87,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    OutlinedButton(
-                      style: ButtonStyle(
-                        fixedSize: MaterialStateProperty.all(
-                          const Size(10, 10),
+                    InkWell(
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.only(left: 5, right: 5),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: const Color.fromARGB(255, 76, 76, 76),
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        height: buttonheight,
+                        width: MediaQuery.of(context).size.width * .13,
+                        child: const Center(
+                          child: Text(
+                            "Original",
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Color.fromARGB(255, 50, 50, 50),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
-                      child: const Text(
-                        "Original Image",
-                        style: TextStyle(
-                          fontSize: 8,
-                        ),
-                      ),
-                      onPressed: () {
+                      onTap: () {
                         setpresentstate(() {
                           setState(() {
                             pickedmask = -1;
@@ -106,18 +118,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                       },
                     ),
-                    OutlinedButton(
-                      style: ButtonStyle(
-                        fixedSize: MaterialStateProperty.all(
-                          const Size(10, 10),
+                    InkWell(
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: const Color.fromARGB(255, 76, 76, 76),
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        height: buttonheight,
+                        width: buttonwidth,
+                        child: Image(
+                          image: assetImage[0],
+                          height: 20,
+                          width: 20,
                         ),
                       ),
-                      child: Image(
-                        image: assetImage[0],
-                        height: 20,
-                        width: 20,
-                      ),
-                      onPressed: () {
+                      onTap: () {
                         setpresentstate(() {
                           setState(() {
                             pickedmask = 0;
@@ -125,18 +143,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                       },
                     ),
-                    OutlinedButton(
-                      style: ButtonStyle(
-                        fixedSize: MaterialStateProperty.all(
-                          const Size(10, 10),
+                    InkWell(
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: const Color.fromARGB(255, 76, 76, 76),
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        height: buttonheight,
+                        width: buttonwidth,
+                        child: Image(
+                          image: assetImage[1],
+                          height: 20,
+                          width: 20,
                         ),
                       ),
-                      child: Image(
-                        image: assetImage[1],
-                        height: 20,
-                        width: 20,
-                      ),
-                      onPressed: () {
+                      onTap: () {
                         setpresentstate(() {
                           setState(() {
                             pickedmask = 1;
@@ -144,18 +168,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                       },
                     ),
-                    OutlinedButton(
-                      style: ButtonStyle(
-                        fixedSize: MaterialStateProperty.all(
-                          const Size(10, 10),
+                    InkWell(
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: const Color.fromARGB(255, 76, 76, 76),
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        height: buttonheight,
+                        width: buttonwidth,
+                        child: Image(
+                          image: assetImage[2],
+                          height: 20,
+                          width: 20,
                         ),
                       ),
-                      child: Image(
-                        image: assetImage[2],
-                        height: 20,
-                        width: 20,
-                      ),
-                      onPressed: () {
+                      onTap: () {
                         setpresentstate(() {
                           setState(() {
                             pickedmask = 2;
@@ -163,18 +193,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                       },
                     ),
-                    OutlinedButton(
-                      style: ButtonStyle(
-                        fixedSize: MaterialStateProperty.all(
-                          Size(10, 30),
+                    InkWell(
+                      child: Container(
+                        margin: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: const Color.fromARGB(255, 76, 76, 76),
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        height: buttonheight,
+                        width: buttonwidth,
+                        child: Image(
+                          image: assetImage[3],
+                          height: buttonheight,
+                          width: buttonwidth,
                         ),
                       ),
-                      child: Image(
-                        image: assetImage[3],
-                        height: 20,
-                        width: 20,
-                      ),
-                      onPressed: () {
+                      onTap: () {
                         setpresentstate(() {
                           setState(() {
                             pickedmask = 3;
@@ -186,10 +222,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 ElevatedButton(
                   style: ButtonStyle(
-                    // fixedSize: MaterialStateProperty.all(
-                    //   const Size(80, 10),
-                    // ),
-                    // iconSize: MaterialStateProperty.all(10),
                     backgroundColor: MaterialStateColor.resolveWith(
                       (states) => const Color.fromARGB(255, 42, 120, 114),
                     ),
@@ -225,9 +257,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   //  Navigator.pop(context);
                 },
               ),
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         centerTitle: true,
-        title: const Text("Add Image/Icon"),
+        title: const Text(
+          "Add Image/Icon",
+          style: TextStyle(
+            color: Color.fromARGB(255, 99, 99, 99),
+            fontFamily: "Roboto Slab",
+          ),
+        ),
       ),
       body: Column(
         children: [
@@ -236,8 +274,9 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
-              border:
-                  Border.all(color: const Color.fromARGB(255, 197, 197, 197)),
+              border: Border.all(
+                color: const Color.fromARGB(255, 197, 197, 197),
+              ),
             ),
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.all(10),
