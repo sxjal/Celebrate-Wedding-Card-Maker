@@ -1,7 +1,6 @@
 // ignore_for_file: unused_field, prefer_typing_uninitialized_variables
 import 'dart:io';
 import 'package:celebrate/imagepreview.dart';
-import 'package:celebrate/popup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import "package:image_picker/image_picker.dart";
@@ -15,18 +14,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var pickedmask = 0;
+  var pickedmask = -1;
+  File? _image;
+  final imagepicker = ImagePicker();
+  var pickedimage;
+  CroppedFile? croppedFile;
   List<AssetImage> assetImage = const [
     AssetImage("asset/user_image_frame_1.png"),
     AssetImage("asset/user_image_frame_2.png"),
     AssetImage("asset/user_image_frame_3.png"),
     AssetImage("asset/user_image_frame_4.png"),
   ];
-
-  File? _image;
-  final imagepicker = ImagePicker();
-  var pickedimage;
-  CroppedFile? croppedFile;
   void _pickgallery() async {
     pickedimage = await imagepicker.pickImage(
       source: ImageSource.gallery,
@@ -52,13 +50,161 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     dialog();
-    // setState(() {});
   }
 
   void dialog() {
     showDialog(
-        context: context,
-        builder: (builder) => PopupWidget(pickedimage: croppedFile));
+      context: context,
+      builder: (builder) {
+        pickedmask = -1;
+        return AlertDialog(
+          content: StatefulBuilder(
+              builder: (BuildContext context, StateSetter setpresentstate) {
+            print("buidlider called");
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    iconSize: MediaQuery.of(context).size.width * .08,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.cancel),
+                  ),
+                ),
+                const Text(
+                  "Uploaded Image",
+                ),
+                MaskWidget(
+                  mask: pickedmask,
+                  maskimage: croppedFile,
+                  screen: 1,
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    OutlinedButton(
+                      style: ButtonStyle(
+                        fixedSize: MaterialStateProperty.all(
+                          const Size(10, 10),
+                        ),
+                      ),
+                      child: const Text(
+                        "Original Image",
+                        style: TextStyle(
+                          fontSize: 8,
+                        ),
+                      ),
+                      onPressed: () {
+                        setpresentstate(() {
+                          setState(() {
+                            pickedmask = -1;
+                          });
+                        });
+                      },
+                    ),
+                    OutlinedButton(
+                      style: ButtonStyle(
+                        fixedSize: MaterialStateProperty.all(
+                          const Size(10, 10),
+                        ),
+                      ),
+                      child: Image(
+                        image: assetImage[0],
+                        height: 20,
+                        width: 20,
+                      ),
+                      onPressed: () {
+                        setpresentstate(() {
+                          setState(() {
+                            pickedmask = 0;
+                          });
+                        });
+                      },
+                    ),
+                    OutlinedButton(
+                      style: ButtonStyle(
+                        fixedSize: MaterialStateProperty.all(
+                          const Size(10, 10),
+                        ),
+                      ),
+                      child: Image(
+                        image: assetImage[1],
+                        height: 20,
+                        width: 20,
+                      ),
+                      onPressed: () {
+                        setpresentstate(() {
+                          setState(() {
+                            pickedmask = 1;
+                          });
+                        });
+                      },
+                    ),
+                    OutlinedButton(
+                      style: ButtonStyle(
+                        fixedSize: MaterialStateProperty.all(
+                          const Size(10, 10),
+                        ),
+                      ),
+                      child: Image(
+                        image: assetImage[2],
+                        height: 20,
+                        width: 20,
+                      ),
+                      onPressed: () {
+                        setpresentstate(() {
+                          setState(() {
+                            pickedmask = 2;
+                          });
+                        });
+                      },
+                    ),
+                    OutlinedButton(
+                      style: ButtonStyle(
+                        fixedSize: MaterialStateProperty.all(
+                          Size(10, 30),
+                        ),
+                      ),
+                      child: Image(
+                        image: assetImage[3],
+                        height: 20,
+                        width: 20,
+                      ),
+                      onPressed: () {
+                        setpresentstate(() {
+                          setState(() {
+                            pickedmask = 3;
+                          });
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    // fixedSize: MaterialStateProperty.all(
+                    //   const Size(80, 10),
+                    // ),
+                    // iconSize: MaterialStateProperty.all(10),
+                    backgroundColor: MaterialStateColor.resolveWith(
+                      (states) => const Color.fromARGB(255, 42, 120, 114),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Use this image"),
+                ),
+              ],
+            );
+          }),
+        );
+      },
+    );
   }
 
   @override
@@ -128,14 +274,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          Container(
-            child: pickedimage != null
-                ? MaskWidget(
-                    assetImage: assetImage[pickedmask],
-                    maskimage: pickedimage,
-                  )
-                : const Text(""),
-          ),
+          croppedFile != null
+              ? MaskWidget(
+                  mask: pickedmask,
+                  maskimage: croppedFile,
+                  screen: 2,
+                )
+              : const Text(""),
         ],
       ),
     );

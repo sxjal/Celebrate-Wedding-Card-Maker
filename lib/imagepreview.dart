@@ -5,19 +5,32 @@ import 'dart:io';
 
 class MaskWidget extends StatelessWidget {
   const MaskWidget(
-      {super.key, required this.assetImage, required this.maskimage});
+      {super.key,
+      required this.mask,
+      required this.maskimage,
+      required this.screen});
 
-  final AssetImage assetImage;
+  final int screen;
+  final int mask;
   final CroppedFile? maskimage;
   @override
   Widget build(BuildContext context) {
+    List<AssetImage> assetImage = const [
+      AssetImage("asset/user_image_frame_1.png"),
+      AssetImage("asset/user_image_frame_2.png"),
+      AssetImage("asset/user_image_frame_3.png"),
+      AssetImage("asset/user_image_frame_4.png"),
+    ];
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+
     return Container(
-      width: MediaQuery.of(context).size.width * .9,
-      height: MediaQuery.of(context).size.height * .5,
+      width: width * .9,
+      height: screen == 1 ? height * .2 : height * .3,
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.all(10),
       child: WidgetMask(
-        blendMode: BlendMode.srcATop,
+        blendMode: mask == -1 ? BlendMode.src : BlendMode.srcATop,
         childSaveLayer: true,
         mask: Image(
           image: FileImage(
@@ -25,10 +38,17 @@ class MaskWidget extends StatelessWidget {
           ),
           fit: BoxFit.fill,
         ),
-        child: Image(
-          image: assetImage,
-          fit: BoxFit.fill,
-        ),
+        child: mask == -1
+            ? Image(
+                image: FileImage(
+                  File(maskimage!.path),
+                ),
+                fit: BoxFit.fill,
+              )
+            : Image(
+                image: assetImage[mask],
+                fit: BoxFit.fill,
+              ),
       ),
     );
   }
