@@ -5,9 +5,9 @@ import 'dart:io';
 import 'package:widget_mask/widget_mask.dart';
 
 class MaskWidget extends StatefulWidget {
-  MaskWidget({super.key, required this.pickedimage});
+  const MaskWidget({super.key, required this.pickedimage});
 
-  CroppedFile? pickedimage;
+  final CroppedFile? pickedimage;
 
   @override
   State<MaskWidget> createState() => _MaskWidgetState();
@@ -88,14 +88,16 @@ class _MaskWidgetState extends State<MaskWidget> {
         ),
       ),
     );
-
-    setState(() {
-      widget.pickedimage = croppedFile;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    List<AssetImage> assetImage = const [
+      AssetImage("asset/user_image_frame_1.png"),
+      AssetImage("asset/user_image_frame_2.png"),
+      AssetImage("asset/user_image_frame_3.png"),
+      AssetImage("asset/user_image_frame_4.png")
+    ];
     return Container(
       child: widget.pickedimage != null
           ? Stack(
