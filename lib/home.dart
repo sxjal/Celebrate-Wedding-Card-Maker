@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import "package:image_picker/image_picker.dart";
 import "package:image_cropper/image_cropper.dart";
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -89,8 +90,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     InkWell(
                       child: Container(
-                        margin: const EdgeInsets.all(5),
-                        padding: const EdgeInsets.only(left: 5, right: 5),
+                        margin: const EdgeInsets.all(3),
+                        padding: const EdgeInsets.only(left: 3, right: 3),
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: const Color.fromARGB(255, 76, 76, 76),
@@ -99,12 +100,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         height: buttonheight,
                         width: MediaQuery.of(context).size.width * .13,
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             "Original",
-                            style: TextStyle(
+                            style: GoogleFonts.robotoSlab(
+                              color: const Color.fromARGB(255, 50, 50, 50),
+                              fontStyle: FontStyle.italic,
                               fontSize: 10,
-                              color: Color.fromARGB(255, 50, 50, 50),
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -259,11 +261,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         centerTitle: true,
-        title: const Text(
+        title: Text(
           "Add Image/Icon",
-          style: TextStyle(
-            color: Color.fromARGB(255, 99, 99, 99),
-            fontFamily: "Roboto Slab",
+          style: GoogleFonts.robotoSlab(
+            color: const Color.fromARGB(255, 80, 80, 80),
+            fontStyle: FontStyle.italic,
           ),
         ),
       ),
@@ -288,8 +290,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
+                Text(
                   "Upload Image",
+                  style: GoogleFonts.robotoSlab(
+                    color: const Color.fromARGB(255, 80, 80, 80),
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -300,10 +306,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         (states) => const Color.fromARGB(255, 42, 120, 114)),
                   ),
                   onPressed: _pickgallery,
-                  child: const Text(
+                  child: Text(
                     "Choose from Device",
-                    style: TextStyle(
-                      color: Colors.white,
+                    style: GoogleFonts.robotoSlab(
+                      color: const Color.fromARGB(255, 255, 255, 255),
                     ),
                   ),
                 ),
