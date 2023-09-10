@@ -112,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          MaskWidget(pickedimage: croppedFile),
+          ImageProcessing(pickedimage: croppedFile),
         ],
       ),
     );

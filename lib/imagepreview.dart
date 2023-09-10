@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:widget_mask/widget_mask.dart';
 import 'dart:io';
 
-class MyWidget extends StatelessWidget {
-  const MyWidget(
+class MaskWidget extends StatelessWidget {
+  const MaskWidget(
       {super.key, required this.assetImage, required this.maskimage});
 
   final AssetImage assetImage;
@@ -19,7 +20,7 @@ class MyWidget extends StatelessWidget {
         childSaveLayer: true,
         mask: Image(
           image: FileImage(
-            File(widget.pickedimage!.path),
+            File(maskimage.path),
           ),
           fit: BoxFit.fill,
         ),

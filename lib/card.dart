@@ -1,19 +1,18 @@
+import 'package:celebrate/imagepreview.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'dart:io';
 
-import 'package:widget_mask/widget_mask.dart';
-
-class MaskWidget extends StatefulWidget {
-  const MaskWidget({super.key, required this.pickedimage});
+class ImageProcessing extends StatefulWidget {
+  const ImageProcessing({super.key, required this.pickedimage});
 
   final CroppedFile? pickedimage;
 
   @override
-  State<MaskWidget> createState() => _MaskWidgetState();
+  State<ImageProcessing> createState() => _ImageProcessingState();
 }
 
-class _MaskWidgetState extends State<MaskWidget> {
+class _ImageProcessingState extends State<ImageProcessing> {
   void init() {
     super.initState();
     dialog(widget.pickedimage!);
@@ -101,7 +100,10 @@ class _MaskWidgetState extends State<MaskWidget> {
 
     return Container(
       child: widget.pickedimage != null
-          ? 
+          ? MaskWidget(
+              assetImage: assetImage[0],
+              maskimage: ,
+            )
           : const Text(""),
     );
   }
