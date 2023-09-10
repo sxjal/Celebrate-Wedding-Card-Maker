@@ -6,7 +6,6 @@ void main() {
     const MaterialApp(
       title: 'Flutter Tutorial',
       home: SplashScreen(),
-      //home: ExampleApp(),
     ),
   );
 }
