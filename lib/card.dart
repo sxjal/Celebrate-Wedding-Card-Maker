@@ -18,6 +18,14 @@ class _ImageProcessingState extends State<ImageProcessing> {
     dialog(widget.pickedimage!);
   }
 
+  var pickedmask = 0;
+  List<AssetImage> assetImage = const [
+    AssetImage("asset/user_image_frame_1.png"),
+    AssetImage("asset/user_image_frame_2.png"),
+    AssetImage("asset/user_image_frame_3.png"),
+    AssetImage("asset/user_image_frame_4.png"),
+  ];
+
   void dialog(CroppedFile croppedFile) {
     showDialog(
       context: context,
@@ -57,10 +65,9 @@ class _ImageProcessingState extends State<ImageProcessing> {
                   height: 10,
                 ),
                 Expanded(
-                  child: Image(
-                    image: FileImage(
-                      File(croppedFile.path),
-                    ),
+                  child: MaskWidget(
+                    assetImage: assetImage[pickedmask],
+                    maskimage: widget.pickedimage,
                   ),
                 ),
                 const SizedBox(
@@ -91,18 +98,11 @@ class _ImageProcessingState extends State<ImageProcessing> {
 
   @override
   Widget build(BuildContext context) {
-    List<AssetImage> assetImage = const [
-      AssetImage("asset/user_image_frame_1.png"),
-      AssetImage("asset/user_image_frame_2.png"),
-      AssetImage("asset/user_image_frame_3.png"),
-      AssetImage("asset/user_image_frame_4.png"),
-    ];
-
     return Container(
       child: widget.pickedimage != null
           ? MaskWidget(
-              assetImage: assetImage[0],
-              maskimage: ,
+              assetImage: assetImage[pickedmask],
+              maskimage: widget.pickedimage,
             )
           : const Text(""),
     );

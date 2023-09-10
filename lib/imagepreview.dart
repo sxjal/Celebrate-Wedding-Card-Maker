@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:widget_mask/widget_mask.dart';
 import 'dart:io';
 
@@ -7,7 +8,7 @@ class MaskWidget extends StatelessWidget {
       {super.key, required this.assetImage, required this.maskimage});
 
   final AssetImage assetImage;
-  final File maskimage;
+  final CroppedFile? maskimage;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,7 +21,7 @@ class MaskWidget extends StatelessWidget {
         childSaveLayer: true,
         mask: Image(
           image: FileImage(
-            File(maskimage.path),
+            File(maskimage!.path),
           ),
           fit: BoxFit.fill,
         ),
