@@ -2,7 +2,7 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; 
+import 'package:flutter/services.dart';
 import "package:image_picker/image_picker.dart";
 import "package:image_cropper/image_cropper.dart";
 import 'package:widget_mask/widget_mask.dart';
@@ -28,12 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onpickimage(var pickedimage) async {
-    print("In _onpickimage");
     if (pickedimage == null) {
-      print("inside if");
       return;
     } else {
-      print("inside else");
       _selectedimage = File(pickedimage.path);
 
       CroppedFile? croppedFile = await ImageCropper().cropImage(
@@ -44,8 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
         maxWidth: 500, // Adjust maximum width
         maxHeight: 500, // Adjust maximum height
       );
-      //image in here
-      print("croppedFile");
+
       dialog(croppedFile!);
     }
   }
@@ -195,46 +191,17 @@ class _HomeScreenState extends State<HomeScreen> {
               ? Stack(
                   children: [
                     Container(
-                      width: 500,
-                      height: 500,
+                      width: MediaQuery.of(context).size.width * .9,
+                      height: MediaQuery.of(context).size.height * .5,
                       padding: const EdgeInsets.all(10),
                       margin: const EdgeInsets.all(10),
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("asset/user_image_frame_1.png"),
-                          // colorFilter: ColorFilter.mode(
-                          //   Color.fromARGB(255, 236, 236, 236),
-                          //   BlendMode.lighten,
-                          // ),
-                        ),
-                      ),
                       child: Image(
                         image: FileImage(
                           File(pickedimage.path),
                         ),
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        colorBlendMode: BlendMode.lighten,
-                        filterQuality: FilterQuality.high,
                         fit: BoxFit.fill,
                       ),
                     ),
-                    // Container(
-                    //   width: 500,
-                    //   height: 500,
-                    //   padding: const EdgeInsets.all(10),
-                    //   margin: const EdgeInsets.all(10),
-                    //   decoration: BoxDecoration(
-                    //     image: DecorationImage(
-                    //       image: FileImage(
-                    //         File(pickedimage.path),
-                    //       ),
-                    //       colorFilter: const ColorFilter.mode(
-                    //         Color.fromARGB(255, 0, 0, 0),
-                    //         BlendMode.lighten,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 )
               : const Text(""),
