@@ -1,7 +1,6 @@
 import 'package:celebrate/imagepreview.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'dart:io';
 
 class ImageProcessing extends StatefulWidget {
   const ImageProcessing({super.key, required this.pickedimage});
