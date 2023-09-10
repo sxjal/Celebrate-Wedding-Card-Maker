@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:celebrate/card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import "package:image_picker/image_picker.dart";
+import "package:image_cropper/image_cropper.dart";
+import 'package:widget_mask/widget_mask.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,6 +15,37 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  File? _image;
+  final imagepicker = ImagePicker();
+  var pickedimage;
+  CroppedFile? croppedFile;
+  void _pickgallery() async {
+    pickedimage = await imagepicker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 600,
+    );
+    _onpickimage(pickedimage);
+  }
+
+  void _onpickimage(var pickedimage) async {
+    if (pickedimage == null) {
+      return;
+    } else {
+      _image = File(pickedimage.path);
+
+      croppedFile = await ImageCropper().cropImage(
+        sourcePath: pickedimage.path,
+        aspectRatio: const CropAspectRatio(
+            ratioX: 1.0, ratioY: 1.0), // Adjust aspect ratio as needed
+        compressQuality: 100, // Adjust image quality
+        maxWidth: 500, // Adjust maximum width
+        maxHeight: 500, // Adjust maximum height
+      );
+    }
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,9 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     backgroundColor: MaterialStateColor.resolveWith(
                         (states) => const Color.fromARGB(255, 42, 120, 114)),
                   ),
-                  onPressed: () {
-                    Popup().pickgallery();
-                  },
+                  onPressed: _pickgallery,
                   child: const Text(
                     "Choose from Device",
                     style: TextStyle(
@@ -81,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          Popup(),
+          MaskWidget(pickedimage: croppedFile),
         ],
       ),
     );

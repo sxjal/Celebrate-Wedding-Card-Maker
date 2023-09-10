@@ -1,44 +1,25 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+
 import 'package:widget_mask/widget_mask.dart';
 
-class Popup extends StatelessWidget {
-  Popup({super.key});
+class MaskWidget extends StatefulWidget {
+  MaskWidget({super.key, required this.pickedimage});
 
-  File? _selectedimage;
-  final imagepicker = ImagePicker();
-  var pickedimage;
+  CroppedFile? pickedimage;
 
-  void pickgallery() async {
-    pickedimage = await imagepicker.pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 600,
-    );
-    _onpickimage(pickedimage);
+  @override
+  State<MaskWidget> createState() => _MaskWidgetState();
+}
+
+class _MaskWidgetState extends State<MaskWidget> {
+  void init() {
+    super.initState();
+    dialog(widget.pickedimage!);
   }
 
-  void _onpickimage(var pickedimage) async {
-    if (pickedimage == null) {
-      return;
-    } else {
-      _selectedimage = File(pickedimage.path);
-
-      CroppedFile? croppedFile = await ImageCropper().cropImage(
-        sourcePath: pickedimage.path,
-        aspectRatio: const CropAspectRatio(
-            ratioX: 1.0, ratioY: 1.0), // Adjust aspect ratio as needed
-        compressQuality: 100, // Adjust image quality
-        maxWidth: 500, // Adjust maximum width
-        maxHeight: 500, // Adjust maximum height
-      );
-
-      dialog(croppedFile!, context);
-    }
-  }
-
-  void dialog(CroppedFile croppedFile, BuildContext context) {
+  void dialog(CroppedFile croppedFile) {
     showDialog(
       context: context,
       builder: (builder) => Center(
@@ -107,13 +88,16 @@ class Popup extends StatelessWidget {
         ),
       ),
     );
-    pickedimage = croppedFile;
+
+    setState(() {
+      widget.pickedimage = croppedFile;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: pickedimage != null
+      child: widget.pickedimage != null
           ? Stack(
               children: [
                 Container(
@@ -126,14 +110,13 @@ class Popup extends StatelessWidget {
                     childSaveLayer: true,
                     mask: Image(
                       image: FileImage(
-                        File(pickedimage.path),
+                        File(widget.pickedimage!.path),
                       ),
                       fit: BoxFit.fill,
                     ),
                     child: const Image(
-                      image: AssetImage(
-                        "asset/user_image_frame_1.png",
-                      ),
+                      image: AssetImage("asset/user_image_frame_1.png"),
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),
