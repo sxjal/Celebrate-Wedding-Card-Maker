@@ -1,6 +1,7 @@
 // ignore_for_file: unused_field, prefer_typing_uninitialized_variables
 import 'dart:io';
-import 'package:celebrate/card.dart';
+import 'package:celebrate/imagepreview.dart';
+import 'package:celebrate/popup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import "package:image_picker/image_picker.dart";
@@ -14,6 +15,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var pickedmask = 0;
+  List<AssetImage> assetImage = const [
+    AssetImage("asset/user_image_frame_1.png"),
+    AssetImage("asset/user_image_frame_2.png"),
+    AssetImage("asset/user_image_frame_3.png"),
+    AssetImage("asset/user_image_frame_4.png"),
+  ];
+
   File? _image;
   final imagepicker = ImagePicker();
   var pickedimage;
@@ -42,7 +51,14 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
 
-    setState(() {});
+    dialog();
+    // setState(() {});
+  }
+
+  void dialog() {
+    showDialog(
+        context: context,
+        builder: (builder) => PopupWidget(pickedimage: croppedFile));
   }
 
   @override
@@ -112,7 +128,14 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          ImageProcessing(pickedimage: croppedFile),
+          Container(
+            child: pickedimage != null
+                ? MaskWidget(
+                    assetImage: assetImage[pickedmask],
+                    maskimage: pickedimage,
+                  )
+                : const Text(""),
+          ),
         ],
       ),
     );
